@@ -55,17 +55,14 @@ def from_mesh(vertices, triangles, n=1000):
     FNormals = FNormals / FAreas[:, None]
     FAreas = 0.5 * FAreas
     FNormals = FNormals
-    VNormals = np.zeros_like(vertices)
     VAreas = np.zeros(vertices.shape[0])
     for k in range(3):
-        # VNormals[triangles[:, k], :] += FAreas[:, None] * FNormals
         VAreas[triangles[:, k]] += FAreas
 
     # Normalize normals
     VAreas[VAreas == 0] = 1
-    # VNormals = VNormals / VAreas[:, None]
 
-    ###Step 2: Randomly sample points based on areas
+    # Step 2: Randomly sample points based on areas
     FAreas = FAreas / np.sum(FAreas)
     AreasC = np.cumsum(FAreas)
     samples = np.sort(np.random.rand(n))
@@ -84,7 +81,7 @@ def from_mesh(vertices, triangles, n=1000):
     for i in range(len(FSamples)):
         tidx[idx : idx + FSamples[i]] = i
         idx += FSamples[i]
-    N = np.zeros((n, 3))  # Allocate space for normals
+    # N = np.zeros((n, 3))  # Allocate space for normals
     idx = 0
 
     # Vector used to determine if points need to be flipped across parallelogram
@@ -115,11 +112,6 @@ def from_mesh(vertices, triangles, n=1000):
         + u[idxflip, :] * V1[tidx[idxflip], :]
         + v[idxflip, :] * V2[tidx[idxflip], :]
     )
-
-    # # Step 3: Compute normals of sampled points by barycentric interpolation
-    # Ns = u * VNormals[triangles[tidx, 1], :]
-    # Ns += v * VNormals[triangles[tidx, 2], :]
-    # Ns += (1 - u - v) * VNormals[triangles[tidx, 0], :]
 
     return Ps
 
