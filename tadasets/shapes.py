@@ -193,7 +193,7 @@ def d_swiss_cheese(n_points=10000, n_holes=4, d=2, noise=None, seed=None, non_ov
     if seed is not None:
         np.random.seed(seed)
 
-    points = np.random.uniform(-1,1, size=(n_points, d))
+    points = np.random.uniform(-1.5,1.5, size=(n_points, d))
     centers, radiuses = generate_swiss_holes(n_holes, d)
     if non_overlapping is True:
         # Disregard overlaps

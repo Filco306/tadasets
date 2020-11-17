@@ -51,6 +51,6 @@ def generate_swiss_holes(n_holes, d):
     """
     # Sample radiuses from a log-uniform distribution
     # Log uniform to ensure sizes vary reasonably
-    radiuses = np.exp(np.random.uniform(np.log(0.2),np.log(0.5),size=n_holes))
+    radiuses = np.exp(np.random.uniform(np.log(0.2),np.log(0.48),size=n_holes))
     centers = np.random.uniform(-1,1,size=(n_holes,d))
     return centers, radiuses
